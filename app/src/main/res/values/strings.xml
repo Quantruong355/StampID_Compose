@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">StampID-Compose</string>
+
+    <!-- Onboard Texts -->
+    <string name="onboard_text0">Continue</string>
+    <string name="onboard_text1">Identify stamp instanly</string>
+    <string name="onboard_text2">accurately identify stamps via\ncaptured or uploaded images</string>
+    <string name="onboard_text3">Explore 1,000+ Stamps</string>
+    <string name="onboard_text4">In-depth into for 1000+ stamp from 200+\ncountries and regions</string>
+    <string name="onboard_text5">Help us grow!</string>
+    <string name="onboard_text6">Your feedback is the cornerstone for\nperpetually refining the application, ensuring an\nelevated and unparalleled experience</string>
+
+</resources>
