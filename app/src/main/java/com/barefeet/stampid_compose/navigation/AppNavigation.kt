@@ -2,12 +2,10 @@ package com.barefeet.stampid_compose.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
-import com.barefeet.stampid_compose.screens.OnboardScreen
+import com.barefeet.stampid_compose.screens.onboard.OnboardScreen
 
 @Composable
 fun AppNavigation(modifier: Modifier = Modifier,startDestination: Routes) {

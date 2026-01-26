@@ -6,6 +6,9 @@ import kotlinx.serialization.Serializable
 sealed interface Routes {
 
     @Serializable
+    object SplashScreen : Routes
+
+    @Serializable
     object OnboardScreen : Routes
 
     @Serializable

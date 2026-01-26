@@ -13,9 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.barefeet.stampid_compose.navigation.AppNavigation
 import com.barefeet.stampid_compose.navigation.Routes
+import com.barefeet.stampid_compose.screens.onboard.OnboardingManager
 import com.barefeet.stampid_compose.ui.theme.StampIDComposeTheme
 
 class MainActivity : ComponentActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
 //        val splashScreen = installSplashScreen()
 
