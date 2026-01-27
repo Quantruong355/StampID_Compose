@@ -2,11 +2,13 @@ package com.barefeet.stampid_compose.screens.onboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 data class OnboardUiState(
     val pages: List<OnboardingPage> = OnboardingPageList.pages,
@@ -20,8 +22,9 @@ sealed class OnboardUiEvent {
     object OnFinishClick : OnboardUiEvent()
 }
 
-class OnboardViewModel(
-//    private val onboardingManager: OnboardingManager
+@HiltViewModel
+class OnboardViewModel @Inject constructor(
+     private val onboardingManager: OnboardingManager
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(OnboardUiState())
@@ -53,7 +56,7 @@ class OnboardViewModel(
 
     private fun finishOnboarding() {
         viewModelScope.launch {
-//            onboardingManager.saveOnboardingStatus(true)
+            onboardingManager.saveOnboardingStatus(true)
             _navigateToHome.emit(Unit)
         }
     }

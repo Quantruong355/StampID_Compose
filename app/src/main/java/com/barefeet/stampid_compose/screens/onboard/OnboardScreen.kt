@@ -38,14 +38,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.barefeet.stampid_compose.R
 import com.barefeet.stampid_compose.UI_Common.CommonButton
-
 @Composable
 fun OnboardScreen(
     modifier: Modifier = Modifier,
-    onboardVM : OnboardViewModel = viewModel(),
+    onboardVM : OnboardViewModel = hiltViewModel(),
     onFinish: () -> Unit
     ) {
 

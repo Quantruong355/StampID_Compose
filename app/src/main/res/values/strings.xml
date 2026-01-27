@@ -10,4 +10,13 @@
     <string name="onboard_text5">Help us grow!</string>
     <string name="onboard_text6">Your feedback is the cornerstone for\nperpetually refining the application, ensuring an\nelevated and unparalleled experience</string>
     <string name="onboard_text7">Get Started</string>
+
+    <!-- BottomBar Texts -->
+    <string name="bottombar_text1">Home</string>
+    <string name="bottombar_text2">Collection</string>
+
+    <!-- Home Texts -->
+    <string name="home_text1">Stampnote</string>
+    <string name="home_text2">Search</string>
+
 </resources>

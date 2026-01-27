@@ -9,16 +9,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.barefeet.stampid_compose.navigation.AppNavigation
 import com.barefeet.stampid_compose.navigation.Routes
 import com.barefeet.stampid_compose.screens.onboard.OnboardingManager
+import com.barefeet.stampid_compose.screens.splash.SplashViewModel
 import com.barefeet.stampid_compose.ui.theme.StampIDComposeTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
 //        val splashScreen = installSplashScreen()
 
@@ -33,13 +36,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             StampIDComposeTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-//                    val startDest by viewModel.startDestination.collectAsState()
-
                     // Chỉ vẽ NavHost khi đã load xong (để startDestination đúng)
 //                    if (!viewModel.isLoading.collectAsState().value) {
                     AppNavigation(
-                        modifier = Modifier.padding(innerPadding),
-                        startDestination = Routes.OnboardScreen
+                        modifier = Modifier.padding(innerPadding)
                     )
 //                    }
                 }

@@ -14,4 +14,10 @@ sealed interface Routes {
     @Serializable
     object MainScreen : Routes
 
+    @Serializable
+    object HomeScreen : Routes
+
+    @Serializable
+    object CollectionScreen : Routes
+
 }
