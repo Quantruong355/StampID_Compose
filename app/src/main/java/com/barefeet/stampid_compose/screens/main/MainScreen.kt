@@ -58,6 +58,7 @@ fun MainScreen(
             currentRoute?.hasRoute<Routes.CollectionScreen>() == true
 
     Scaffold(
+        containerColor = colorResource(R.color.white_2),
         floatingActionButton = {
             if (showBottomBar) {
                 FloatingActionButton(

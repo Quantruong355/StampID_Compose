@@ -20,4 +20,6 @@ sealed interface Routes {
     @Serializable
     object CollectionScreen : Routes
 
+    @Serializable
+    object SettingScreen : Routes
 }

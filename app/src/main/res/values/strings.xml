@@ -18,5 +18,21 @@
     <!-- Home Texts -->
     <string name="home_text1">Stampnote</string>
     <string name="home_text2">Search</string>
+    <string name="home_text3">Articles</string>
+
+    <!-- Setting Texts -->
+    <string name="setting_text1">Setting</string>
+    <string name="setting_text2">Manage Membership</string>
+    <string name="setting_text3">My Premium Service</string>
+    <string name="setting_text4">Membership : %s</string>
+    <string name="setting_text5">Legal</string>
+    <string name="setting_text6">Privacy Policy</string>
+    <string name="setting_text7">Terms of Use</string>
+
+    <!-- IAP Texts -->
+    <string name="iap_text1">Upgrade Premium</string>
+    <string name="iap_text2">Unlock to get premium features!</string>
+    <string name="iap_text3">Upgrade Now</string>
+
 
 </resources>

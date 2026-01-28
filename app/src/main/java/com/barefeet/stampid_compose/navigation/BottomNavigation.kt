@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import com.barefeet.stampid_compose.R
 import com.barefeet.stampid_compose.screens.collection.CollectionScreen
 import com.barefeet.stampid_compose.screens.home.HomeScreen
+import com.barefeet.stampid_compose.screens.setting.SettingScreen
 
 @Composable
 fun BottomNavGraph(
@@ -23,10 +24,18 @@ fun BottomNavGraph(
             .background(color = colorResource(id = R.color.white_2))
     ) {
         composable<Routes.HomeScreen> {
-            HomeScreen()
+            HomeScreen(
+                onSettingClick = {
+                    navController.navigate(Routes.SettingScreen)
+                }
+            )
         }
         composable<Routes.CollectionScreen> {
             CollectionScreen()
         }
+        composable<Routes.SettingScreen> {
+            SettingScreen()
+        }
+
     }
 }
