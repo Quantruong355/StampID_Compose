@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,31 +26,63 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.barefeet.stampid_compose.R
 import com.barefeet.stampid_compose.UI_Common.IAPBanner
 import com.barefeet.stampid_compose.utils.noRippleClickable
 
 @Composable
-fun SettingScreen(modifier: Modifier = Modifier) {
+fun SettingScreen(
+    modifier: Modifier = Modifier,
+    settingVM: SettingViewModel = viewModel(),
+    onBackClick: () -> Unit
+) {
+
+    LaunchedEffect(Unit) {
+        settingVM.effect.collect { effect ->
+            when (effect) {
+                is SettingUiEffect.NavigateToBack -> {
+                    onBackClick()
+                }
+                is SettingUiEffect.NavigateToIAP -> {
+
+                }
+                is SettingUiEffect.NavigateToMembership -> {
+
+                }
+                is SettingUiEffect.NavigateToPrivacy -> {
+
+                }
+                is SettingUiEffect.NavigateToTerm -> {
+
+                }
+            }
+        }
+    }
+
     SettingContent(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(R.color.white_2))
+            .background(colorResource(R.color.white_2)),
+        onEvent = settingVM::onEvent
     )
 }
 
 @Composable
-fun SettingContent(modifier: Modifier = Modifier) {
+fun SettingContent(
+    modifier: Modifier = Modifier,
+    onEvent: (SettingUiEvent) -> Unit
+) {
     Column(
         modifier = modifier
     ) {
-        SettingHeader()
+        SettingHeader(onBackClick = { onEvent(SettingUiEvent.OnBackClick) })
 
         IAPBanner(
             modifier = Modifier
                 .padding(horizontal = 10.dp)
                 .padding(top = 20.dp),
-            onClick = {}
+            onClick = { onEvent(SettingUiEvent.OnIAPClick)}
         )
 
         HorizontalDivider(
@@ -62,17 +95,22 @@ fun SettingContent(modifier: Modifier = Modifier) {
         )
 
         MembershipSection(
-            modifier = Modifier.padding(start = 10.dp)
+            modifier = Modifier.padding(start = 10.dp),
+            onClick = { onEvent(SettingUiEvent.OnMembershipClick)}
         )
 
         Legalsection(
-            modifier = Modifier.padding(start = 10.dp)
+            modifier = Modifier.padding(start = 10.dp),
+            onPrivacyClick = { onEvent(SettingUiEvent.OnPrivacyClick) },
+            onTermClick = { onEvent(SettingUiEvent.OnTermClick) }
         )
     }
 }
 
 @Composable
-fun SettingHeader(modifier: Modifier = Modifier) {
+fun SettingHeader(
+    onBackClick: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -85,7 +123,7 @@ fun SettingHeader(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .align(Alignment.CenterStart)
                 .padding(start = 16.dp)
-                .noRippleClickable{ }
+                .noRippleClickable{onBackClick() }
         )
 
         Text(
@@ -102,7 +140,10 @@ fun SettingHeader(modifier: Modifier = Modifier) {
 
 
 @Composable
-fun MembershipSection(modifier: Modifier = Modifier) {
+fun MembershipSection(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+    ) {
     Text(
         text = stringResource(R.string.setting_text2),
         color = colorResource(R.color.gray_2),
@@ -118,7 +159,7 @@ fun MembershipSection(modifier: Modifier = Modifier) {
         modifier = modifier
             .padding(top= 15.dp)
             .fillMaxWidth()
-            .noRippleClickable{ }
+            .noRippleClickable{ onClick() }
     ) {
         Image(
             painter = painterResource(R.drawable.diamond_icon),
@@ -159,7 +200,11 @@ fun MembershipSection(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun Legalsection(modifier: Modifier = Modifier) {
+fun Legalsection(
+    modifier: Modifier = Modifier,
+    onPrivacyClick: () -> Unit,
+    onTermClick: () -> Unit
+    ) {
 
     Text(
         text = stringResource(R.string.setting_text5),
@@ -174,7 +219,7 @@ fun Legalsection(modifier: Modifier = Modifier) {
     Row(modifier = modifier
         .fillMaxWidth()
         .padding(top= 25.dp)
-        .noRippleClickable{ }
+        .noRippleClickable{ onPrivacyClick() }
     ){
         Image(
             painter = painterResource(R.drawable.privacy_icon),
@@ -197,7 +242,7 @@ fun Legalsection(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .padding(top= 30.dp)
-            .noRippleClickable{ }
+            .noRippleClickable{ onTermClick() }
     ){
         Image(
             painter = painterResource(R.drawable.term_icon),
@@ -219,5 +264,7 @@ fun Legalsection(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun SettingScreenPrev() {
-    SettingScreen()
+    SettingScreen(
+        onBackClick = {}
+    )
 }

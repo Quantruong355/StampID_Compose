@@ -23,6 +23,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedTextFieldDefaults.contentPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -54,22 +55,42 @@ import com.barefeet.stampid_compose.R
 import com.barefeet.stampid_compose.UI_Common.IAPBanner
 import com.barefeet.stampid_compose.data.Article
 import com.barefeet.stampid_compose.utils.loadArticlesFromAssets
+import kotlinx.coroutines.flow.collect
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     homeVM: HomeViewModel = viewModel(),
-    onArticleClick: () -> Unit = {},
+    onArticleClick: (Article) -> Unit,
     onSettingClick: () -> Unit,
+    onSearchClick: () -> Unit,
 ) {
     val uiState by homeVM.uiState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        homeVM.effect.collect { effect ->
+            when (effect) {
+                is HomeUiEffect.NavigateToArticleDetail -> {
+                    onArticleClick(effect.article)
+                }
+
+                is HomeUiEffect.NavigateToSetting -> {
+                    onSettingClick()
+                }
+
+                is HomeUiEffect.NavigateToSearch -> {
+                    onSearchClick()
+                }
+            }
+        }
+    }
 
     HomeContent(
         modifier = modifier
             .fillMaxSize()
             .background(color = colorResource(id = R.color.white_2)),
         article_list = uiState.articles,
-        onSettingClick = onSettingClick
+        onEvent = homeVM::onEvent
     )
 }
 
@@ -77,7 +98,7 @@ fun HomeScreen(
 fun HomeContent(
     modifier: Modifier = Modifier,
     article_list: List<Article>,
-    onSettingClick: () -> Unit
+    onEvent: (HomeUiEvent) -> Unit
 ) {
     LazyColumn(
         modifier = modifier
@@ -87,7 +108,7 @@ fun HomeContent(
     ) {
         item {
             HomeHeader(
-                onSettingClick = onSettingClick
+                onSettingClick = {onEvent(HomeUiEvent.OnSettingClick)}
             )
         }
 
@@ -96,13 +117,11 @@ fun HomeContent(
                 modifier = Modifier
                     .padding(horizontal = 10.dp)
                     .padding(top = 20.dp),
-                onClick = { }
+                onClick = {onEvent(HomeUiEvent.OnSearchClick)}
             )
         }
 
-        ArticleSection(article_list, onItemClick = { })
-
-
+        ArticleSection(article_list, onItemClick = { onEvent(HomeUiEvent.OnArticleClick(it))})
     }
 }
 
@@ -119,7 +138,7 @@ fun HomeHeader(
                 contentScale = ContentScale.FillWidth
             )
             .padding(10.dp)
-    ){
+    ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = stringResource(R.string.home_text1),
@@ -132,12 +151,12 @@ fun HomeHeader(
             Spacer(modifier = Modifier.weight(1f))
 
 
-                Image(
-                    painter = painterResource(id = R.drawable.setting_icon),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .clickable(onClick = onSettingClick)
-                )
+            Image(
+                painter = painterResource(id = R.drawable.setting_icon),
+                contentDescription = null,
+                modifier = Modifier
+                    .clickable(onClick = onSettingClick)
+            )
         }
 
         Row(
@@ -149,7 +168,7 @@ fun HomeHeader(
                     shape = RoundedCornerShape(32.dp)
                 )
                 .padding(vertical = 10.dp)
-        ){
+        ) {
             Image(
                 modifier = Modifier
                     .padding(start = 10.dp)
@@ -157,7 +176,7 @@ fun HomeHeader(
                 painter = painterResource(id = R.drawable.search_icon),
                 contentDescription = null,
             )
-            
+
             Text(
                 modifier = Modifier.padding(start = 5.dp),
                 text = stringResource(R.string.home_text2),
@@ -173,7 +192,7 @@ fun HomeHeader(
 
 fun LazyListScope.ArticleSection(
     article_list: List<Article>,
-    onItemClick: () -> Unit = {}
+    onItemClick: (Article) -> Unit = {}
 ) {
     item {
         Text(
@@ -189,9 +208,11 @@ fun LazyListScope.ArticleSection(
     items(
         items = article_list,
         key = { it.headline!! }
-    ){ article ->
-        ArticleItem(article= article,
-            onClick = onItemClick)
+    ) { article ->
+        ArticleItem(
+            article = article,
+            onClick = { onItemClick(article) }
+        )
     }
 }
 
@@ -230,8 +251,8 @@ fun ArticleItem(
             )
 
             Column(
-                modifier = Modifier.padding(start= 10.dp)
-            ){
+                modifier = Modifier.padding(start = 10.dp)
+            ) {
                 Text(
                     text = article.headline!!,
                     color = Color.Black,
@@ -252,7 +273,7 @@ fun ArticleItem(
                     maxLines = 2,
                     lineHeight = 20.sp,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(top= 5.dp)
+                    modifier = Modifier.padding(top = 5.dp)
                 )
             }
         }
@@ -272,6 +293,6 @@ private fun HomeContentPrev() {
     HomeContent(
         modifier = Modifier,
         article_list = emptyList(),
-        onSettingClick = TODO()
+        onEvent = TODO()
     )
 }

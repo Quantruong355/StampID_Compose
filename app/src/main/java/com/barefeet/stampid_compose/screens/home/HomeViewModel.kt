@@ -31,8 +31,7 @@ sealed class HomeUiEvent {
 sealed class HomeUiEffect {
     object NavigateToSetting : HomeUiEffect()
     object NavigateToSearch : HomeUiEffect()
-    data class NavigateToArticleDetail(val articleId: String) : HomeUiEffect()
-    data class ShowToast(val message: String) : HomeUiEffect()
+    data class NavigateToArticleDetail(val article: Article) : HomeUiEffect()
 }
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
@@ -52,7 +51,9 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                 sendEffect(HomeUiEffect.NavigateToSetting)
             }
 
-            else -> {}
+            is HomeUiEvent.OnArticleClick -> {
+                sendEffect(HomeUiEffect.NavigateToArticleDetail(event.article))
+            }
         }
     }
 

@@ -1,5 +1,8 @@
 package com.barefeet.stampid_compose.navigation
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -27,14 +30,31 @@ fun BottomNavGraph(
             HomeScreen(
                 onSettingClick = {
                     navController.navigate(Routes.SettingScreen)
+                },
+                onArticleClick = {
+//                    navController.navigate(Routes.ArticleDetailScreen)
+                },
+                onSearchClick = {
+
                 }
             )
         }
+
         composable<Routes.CollectionScreen> {
             CollectionScreen()
         }
-        composable<Routes.SettingScreen> {
-            SettingScreen()
+
+        composable<Routes.SettingScreen>(
+            enterTransition = {
+                slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left, animationSpec = tween(600))
+            },
+            exitTransition = {
+                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Right,animationSpec = tween(600))
+            },
+        ) {
+            SettingScreen(
+                onBackClick = { navController.navigateUp()}
+            )
         }
 
     }
