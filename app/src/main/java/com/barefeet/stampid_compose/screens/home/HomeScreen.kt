@@ -230,7 +230,7 @@ fun ArticleItem(
             .padding(top = 10.dp)
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.Top
         ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
@@ -251,7 +251,7 @@ fun ArticleItem(
             )
 
             Column(
-                modifier = Modifier.padding(start = 10.dp)
+                modifier = Modifier.padding(start = 10.dp, top = 5.dp, end = 10.dp)
             ) {
                 Text(
                     text = article.headline!!,
@@ -291,8 +291,7 @@ fun ArticleItem(
 @Composable
 private fun HomeContentPrev() {
     HomeContent(
-        modifier = Modifier,
         article_list = emptyList(),
-        onEvent = TODO()
+        onEvent = {}
     )
 }

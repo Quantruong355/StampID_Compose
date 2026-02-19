@@ -48,7 +48,7 @@ import com.barefeet.stampid_compose.navigation.Routes
 
 @Composable
 fun MainScreen(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val bottomNavController = rememberNavController()
     val currentBackStackEntry by bottomNavController.currentBackStackEntryAsState()

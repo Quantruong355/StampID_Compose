@@ -36,12 +36,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             StampIDComposeTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    // Chỉ vẽ NavHost khi đã load xong (để startDestination đúng)
-//                    if (!viewModel.isLoading.collectAsState().value) {
                     AppNavigation(
                         modifier = Modifier.padding(innerPadding)
                     )
-//                    }
                 }
             }
         }
