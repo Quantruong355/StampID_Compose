@@ -46,7 +46,7 @@ fun AppNavigation(modifier: Modifier = Modifier) {
 
         composable<Routes.OnboardScreen> {
             OnboardScreen(
-                modifier = modifier,
+
                 onFinish = { navController.navigate(Routes.MainScreen){
                     popUpTo(Routes.OnboardScreen) {
                         inclusive = true
