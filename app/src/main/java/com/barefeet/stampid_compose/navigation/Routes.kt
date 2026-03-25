@@ -18,8 +18,17 @@ sealed interface Routes {
     object HomeScreen : Routes
 
     @Serializable
+    data class ArticleScreen(val articleIndex: Int)
+
+    @Serializable
     object CollectionScreen : Routes
 
     @Serializable
     object SettingScreen : Routes
+
+    @Serializable
+    object IAPScreen : Routes
+
+    @Serializable
+    object CameraScreen : Routes
 }

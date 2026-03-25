@@ -2,6 +2,7 @@ package com.barefeet.stampid_compose.UI_Common
 
 import android.widget.Button
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -21,6 +22,7 @@ import com.barefeet.stampid_compose.R
 
 @Composable
 fun CommonButton(
+    title: String,
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
@@ -30,13 +32,14 @@ fun CommonButton(
         colors = ButtonDefaults.buttonColors(
             containerColor = colorResource(id = R.color.green_2)
         ),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
+            .height(48.dp)
 
     ) {
         Text(
             modifier = Modifier.padding(vertical = 5.dp),
-            text = stringResource(id = R.string.onboard_text7),
+            text = title,
             color = colorResource(id = R.color.white),
             style = TextStyle(
                 fontSize = 15.sp,

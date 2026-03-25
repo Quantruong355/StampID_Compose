@@ -21,7 +21,6 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
-    modifier: Modifier = Modifier,
     targetRoute: Any?,
     navController: NavController
     ) {
@@ -36,7 +35,7 @@ fun SplashScreen(
             }
         }
     }
-    Box(modifier = modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize()) {
 
         Image(
             painter = painterResource(id = R.drawable.splash_bg),
@@ -61,7 +60,6 @@ fun SplashScreen(
 @Composable
 private fun SplashScreenPrev() {
     SplashScreen(
-        modifier = Modifier,
         targetRoute = Routes.MainScreen,
         navController = NavController(LocalContext.current)
     )

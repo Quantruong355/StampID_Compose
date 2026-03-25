@@ -1,6 +1,15 @@
 package com.barefeet.stampid_compose.navigation
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.EaseInQuart
+import androidx.compose.animation.core.EaseOutQuart
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -25,12 +34,11 @@ fun AppNavigation(modifier: Modifier = Modifier) {
     NavHost(
         navController = navController,
         startDestination = Routes.SplashScreen,
-        modifier = Modifier.background(Color.White)
+        modifier = Modifier.background(Color.White).safeDrawingPadding()
     ) {
 
         composable<Routes.SplashScreen> {
             SplashScreen(
-                modifier = modifier,
                 targetRoute = startDestination,
                 navController = navController
             )
@@ -47,7 +55,7 @@ fun AppNavigation(modifier: Modifier = Modifier) {
             )
         }
 
-        composable<Routes.MainScreen> { backStackEntry ->
+        composable<Routes.MainScreen>{ backStackEntry ->
             MainScreen()
         }
     }

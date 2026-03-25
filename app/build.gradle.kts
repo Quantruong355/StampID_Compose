@@ -78,4 +78,13 @@ dependencies {
     //Coil
     implementation("io.coil-kt.coil3:coil-compose:3.3.0")
     implementation("io.coil-kt.coil3:coil-network-okhttp:3.3.0")
+
+    //CameraX
+    val camerax_version = "1.5.3"
+    implementation("androidx.camera:camera-core:${camerax_version}")
+    implementation("androidx.camera:camera-camera2:${camerax_version}")
+    implementation("androidx.camera:camera-lifecycle:${camerax_version}")
+    implementation("androidx.camera:camera-view:${camerax_version}")
+
+    implementation("com.google.accompanist:accompanist-permissions:0.35.0-alpha")
 }

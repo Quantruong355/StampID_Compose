@@ -20,8 +20,13 @@ fun loadArticlesFromAssets(context: Context): List<Article>? {
     return Gson().fromJson(reader, listType)
 }
 
-fun Modifier.noRippleClickable(onClick: () -> Unit): Modifier = composed {
+fun Modifier.noRippleClickable(
+    enabled: Boolean = true,
+    onClick: () -> Unit
+)
+: Modifier = composed {
     this.clickable(
+        enabled = enabled,
         indication = null,
         interactionSource = remember { MutableInteractionSource() },
         onClick = onClick

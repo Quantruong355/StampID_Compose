@@ -24,14 +24,16 @@ data class HomeUiState(
 
 sealed class HomeUiEvent {
     object OnSearchClick : HomeUiEvent()
+    object OnIAPClick : HomeUiEvent()
     object OnSettingClick : HomeUiEvent()
-    data class OnArticleClick(val article: Article) : HomeUiEvent()
+    data class OnArticleClick(val article: Int) : HomeUiEvent()
 }
 
 sealed class HomeUiEffect {
     object NavigateToSetting : HomeUiEffect()
     object NavigateToSearch : HomeUiEffect()
-    data class NavigateToArticleDetail(val article: Article) : HomeUiEffect()
+    object NavigateToIAP : HomeUiEffect()
+    data class NavigateToArticleDetail(val article: Int) : HomeUiEffect()
 }
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
@@ -53,6 +55,9 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
             is HomeUiEvent.OnArticleClick -> {
                 sendEffect(HomeUiEffect.NavigateToArticleDetail(event.article))
+            }
+            is HomeUiEvent.OnIAPClick -> {
+                sendEffect(HomeUiEffect.NavigateToIAP)
             }
         }
     }

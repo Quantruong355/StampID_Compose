@@ -1,24 +1,17 @@
 package com.barefeet.stampid_compose.screens.main
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemColors
-import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -29,10 +22,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -62,7 +51,7 @@ fun MainScreen(
         floatingActionButton = {
             if (showBottomBar) {
                 FloatingActionButton(
-                    onClick = { /* Action */ },
+                    onClick = { bottomNavController.navigate(Routes.CameraScreen) },
                     shape = CircleShape,
                     containerColor = colorResource(R.color.green_2),
                     modifier = Modifier
@@ -77,14 +66,18 @@ fun MainScreen(
                     )
                 }
             }
-
         },
         floatingActionButtonPosition = FabPosition.Center,
         bottomBar = {
-            if (showBottomBar) {
-                BottomNavBar(bottomNavController, currentRoute)
+            if (currentRoute != null) {
+                AnimatedVisibility(
+                    visible = showBottomBar,
+                    enter = slideInVertically(initialOffsetY = { it }),
+                    exit = slideOutVertically(targetOffsetY = { it })
+                ) {
+                    BottomNavBar(bottomNavController, currentRoute)
+                }
             }
-
         }
     ) { padding ->
         BottomNavGraph(

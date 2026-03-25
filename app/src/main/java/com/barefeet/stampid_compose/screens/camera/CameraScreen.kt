@@ -1,0 +1,306 @@
+package com.barefeet.stampid_compose.screens.camera
+
+import android.Manifest
+import android.net.Uri
+import android.widget.Toast
+import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.camera.core.ImageCapture
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.barefeet.stampid_compose.R
+import com.barefeet.stampid_compose.screens.home.HomeUiEvent
+import com.barefeet.stampid_compose.utils.noRippleClickable
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.PermissionState
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.shouldShowRationale
+import kotlinx.coroutines.delay
+
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+fun CameraScreen(
+    cameraVM: CameraViewModel = hiltViewModel(),
+    onBack: () -> Unit,
+) {
+    val uiState by cameraVM.uiState.collectAsStateWithLifecycle()
+    val cameraPermissionState = rememberPermissionState(
+        permission = Manifest.permission.CAMERA
+    )
+    val isInteractionEnabled = !uiState.isCapturing
+    val ctx = LocalContext.current
+
+    val galleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let { cameraVM.onEvent(CameraUiEvent.OnImagePicked(it)) }
+    }
+
+    val imageCapture = remember {
+        ImageCapture.Builder()
+            .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+            .build()
+    }
+
+
+
+    BackHandler(enabled = uiState.isCapturing) { }
+
+    LaunchedEffect(Unit) {
+        cameraVM.effect.collect { effect ->
+            when (effect) {
+                is CameraUiEffect.CloseScreen -> onBack()
+
+                is CameraUiEffect.LaunchGalleryPicker -> {
+                    galleryLauncher.launch("image/*")
+                }
+
+                is CameraUiEffect.NavigateToLoading -> {
+
+                }
+
+                is CameraUiEffect.ShowToast -> {
+                    Toast.makeText(ctx, effect.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    CameraContent(
+        isPermissionGranted = cameraPermissionState.status.isGranted,
+        onEvent = cameraVM::onEvent,
+        imageCapture = imageCapture,
+        isInteractionEnabled = isInteractionEnabled
+    )
+
+    if (!cameraPermissionState.status.isGranted) {
+        if (cameraPermissionState.status.shouldShowRationale) {
+            AlertDialog(
+                onDismissRequest = { /* ... */ },
+                title = { Text("Camera Permission Require") },
+                text = { Text("App cần camera để chụp ảnh. Cho phép nhé?") },
+                confirmButton = {
+                    Button(onClick = { cameraPermissionState.launchPermissionRequest() }) {
+                        Text("OK")
+                    }
+                }
+            )
+        } else {
+            LaunchedEffect(Unit) {
+                delay(300)
+                cameraPermissionState.launchPermissionRequest()
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+private fun CameraContent(
+    isPermissionGranted: Boolean,
+    imageCapture: ImageCapture,
+    isInteractionEnabled: Boolean,
+    onEvent: (CameraUiEvent) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier.fillMaxSize()
+    ){
+        CameraBody(
+            modifier = Modifier.weight(1f),
+            onEvent = onEvent,
+            isPermissionGranted = isPermissionGranted,
+            imageCapture = imageCapture,
+            isInteractionEnabled = isInteractionEnabled
+        )
+        CameraOption(
+            modifier = Modifier,
+            onEvent = onEvent,
+            imageCapture = imageCapture,
+            isInteractionEnabled = isInteractionEnabled
+        )
+    }
+}
+
+@Composable
+fun CameraBody(
+    isPermissionGranted: Boolean,
+    imageCapture: ImageCapture,
+    isInteractionEnabled: Boolean,
+    onEvent: (CameraUiEvent) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(colorResource(R.color.black))
+    ) {
+        Row(){
+            Image(
+                painter = painterResource(id = R.drawable.close_icon3),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(15.dp)
+                    .noRippleClickable(
+                        enabled = isInteractionEnabled,
+                        onClick = { onEvent(CameraUiEvent.OnCloseClick) }
+                    )
+            )
+        }
+
+        if (isPermissionGranted) {
+            CameraPreview(
+                modifier = Modifier
+                    .padding(bottom = 40.dp),
+                imageCapture = imageCapture
+            )
+        }
+    }
+}
+
+@Composable
+fun CameraOption(
+    onEvent: (CameraUiEvent) -> Unit,
+    imageCapture: ImageCapture,
+    isInteractionEnabled: Boolean,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(colorResource(R.color.white))
+            .padding(vertical = 20.dp)
+        ,
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ){
+        CommonOptionButtonCamera(
+            icon = R.drawable.gallery_icon,
+            title = R.string.camera_text1,
+            modifier = Modifier
+                .noRippleClickable(
+                    enabled = isInteractionEnabled,
+                    onClick = {  onEvent(CameraUiEvent.OnGalleryClick) }
+                )
+        )
+
+        Image(
+            painter = painterResource(id = R.drawable.take_photo_button),
+            contentDescription = null,
+            modifier = Modifier
+                .padding(horizontal = 50.dp)
+                .size(72.dp)
+                .noRippleClickable(
+                    enabled = isInteractionEnabled,
+                    onClick = { onEvent(CameraUiEvent.OnCaptureClick(imageCapture = imageCapture)) }
+                )
+        )
+
+        CommonOptionButtonCamera(
+            icon = R.drawable.snap_tip_icon,
+            title = R.string.camera_text2,
+                    modifier = Modifier
+                    .noRippleClickable{ onEvent(CameraUiEvent.OnSnaptipToggle)}
+        )
+    }
+}
+
+@Composable
+fun CommonOptionButtonCamera(
+    icon: Int,
+    title: Int,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = modifier
+    ){
+        Image(
+            painter = painterResource(id = icon),
+            contentDescription = null,
+            modifier = Modifier
+                .size(32.dp)
+        )
+
+        Text(
+            text = stringResource(title),
+            modifier = Modifier
+                .padding(top = 10.dp),
+            color = colorResource(R.color.black),
+            style = TextStyle(
+                fontSize = 14.sp,
+                fontFamily = FontFamily(Font(R.font.onest_regular)),
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            )
+        )
+    }
+}
+
+//-----------------------------------------------------//
+@Preview
+@Composable
+private fun CommonOptionButtonCameraPrev() {
+    CommonOptionButtonCamera(
+        icon = R.drawable.gallery_icon,
+        title = R.string.camera_text1
+    )
+}
+
+@Preview
+@Composable
+private fun CameraOptionPrev() {
+    CameraOption(
+        modifier = Modifier,
+        onEvent = {},
+        imageCapture = ImageCapture.Builder().build(),
+        isInteractionEnabled = true
+    )
+}
+
+@Preview
+@Composable
+private fun CameraBodyPrev() {
+    CameraBody(
+        modifier = Modifier,
+        onEvent = {},
+        isPermissionGranted = false,
+        imageCapture = ImageCapture.Builder().build(),
+        isInteractionEnabled = true
+    )
+}

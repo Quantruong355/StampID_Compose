@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -60,10 +61,11 @@ import kotlinx.coroutines.flow.collect
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    homeVM: HomeViewModel = viewModel(),
-    onArticleClick: (Article) -> Unit,
+    homeVM: HomeViewModel,
+    onArticleClick: (Int) -> Unit,
     onSettingClick: () -> Unit,
     onSearchClick: () -> Unit,
+    onIAPClick: () -> Unit,
 ) {
     val uiState by homeVM.uiState.collectAsState()
 
@@ -80,6 +82,10 @@ fun HomeScreen(
 
                 is HomeUiEffect.NavigateToSearch -> {
                     onSearchClick()
+                }
+
+                is HomeUiEffect.NavigateToIAP -> {
+                    onIAPClick()
                 }
             }
         }
@@ -108,7 +114,8 @@ fun HomeContent(
     ) {
         item {
             HomeHeader(
-                onSettingClick = {onEvent(HomeUiEvent.OnSettingClick)}
+                onSettingClick = { onEvent(HomeUiEvent.OnSettingClick) },
+                onSearchClick = {onEvent(HomeUiEvent.OnSearchClick)}
             )
         }
 
@@ -117,7 +124,7 @@ fun HomeContent(
                 modifier = Modifier
                     .padding(horizontal = 10.dp)
                     .padding(top = 20.dp),
-                onClick = {onEvent(HomeUiEvent.OnSearchClick)}
+                onClick = {onEvent(HomeUiEvent.OnIAPClick)}
             )
         }
 
@@ -127,7 +134,8 @@ fun HomeContent(
 
 @Composable
 fun HomeHeader(
-    onSettingClick: () -> Unit
+    onSettingClick: () -> Unit,
+    onSearchClick: () -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
@@ -168,6 +176,7 @@ fun HomeHeader(
                     shape = RoundedCornerShape(32.dp)
                 )
                 .padding(vertical = 10.dp)
+                .clickable(onClick = onSearchClick)
         ) {
             Image(
                 modifier = Modifier
@@ -192,7 +201,7 @@ fun HomeHeader(
 
 fun LazyListScope.ArticleSection(
     article_list: List<Article>,
-    onItemClick: (Article) -> Unit = {}
+    onItemClick: (Int) -> Unit = {}
 ) {
     item {
         Text(
@@ -205,13 +214,13 @@ fun LazyListScope.ArticleSection(
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 10.dp)
         )
     }
-    items(
+    itemsIndexed(
         items = article_list,
-        key = { it.headline!! }
-    ) { article ->
+        key = { index, article -> article.headline ?: index }
+    ) { index, article ->
         ArticleItem(
             article = article,
-            onClick = { onItemClick(article) }
+            onClick = { onItemClick(index) }
         )
     }
 }

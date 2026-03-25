@@ -33,6 +33,21 @@
     <string name="iap_text1">Upgrade Premium</string>
     <string name="iap_text2">Unlock to get premium features!</string>
     <string name="iap_text3">Upgrade Now</string>
+    <string name="iap_text4">Unlock Premium</string>
+    <string name="iap_text5">Unlimited stamp identifications</string>
+    <string name="iap_text6">View detailed info and market value estimates</string>
+    <string name="iap_text7">Build, organize, and manage your stamp collection</string>
+    <string name="iap_text8">Export your collection anytime</string>
+    <string name="iap_text9">Premium Weekly</string>
+    <string name="iap_text10">Premium Monthly</string>
+    <string name="iap_text11">Premium Yearly</string>
+    <string name="iap_text12">$3.99/</string>
+    <string name="iap_text13">$9.99/</string>
+    <string name="iap_text14">$39.99/</string>
+    <string name="iap_text15">Payment will be charged to your Google Play account. Subscription auto-renew at the end of subscription period, unless cancelled 24-hours in advance prior to the end of the current period. Your account will be charged for renewal within 24 hours prior to the end of the current period. You can manage and cancel your subscriptions in settings in the Google Play store. For more information, please see our Terms of Use and Privacy Policy.</string>
 
+    <!-- Camera Texts -->
+    <string name="camera_text1">Gallery</string>
+    <string name="camera_text2">Snap tips</string>
 
 </resources>

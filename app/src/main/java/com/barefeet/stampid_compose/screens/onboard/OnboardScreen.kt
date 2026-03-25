@@ -105,7 +105,10 @@ fun OnboardContent(
                    .padding(bottom = 20.dp)
                    .padding(horizontal = 15.dp)
            ) {
-               CommonButton(onClick = onNextClick)
+               CommonButton(
+                   onClick = onNextClick,
+                   title = stringResource(id = R.string.onboard_text7),
+               )
            }
         }
 

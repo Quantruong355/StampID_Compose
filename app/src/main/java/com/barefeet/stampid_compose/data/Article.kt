@@ -6,11 +6,11 @@ import androidx.compose.runtime.Immutable
 @Immutable
 data class Article(
 //    @SerializedName("headline")
-    val headline: String?,
+    val headline: String,
 //    @SerializedName("sections")
-    val sections: List<Section>?,
+    val sections: List<Section>,
 //    @SerializedName("sub_headline")
-    val sub_headline: String?,
+    val sub_headline: String,
 //    @SerializedName("thumb")
     val thumb: String?
 ) {

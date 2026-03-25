@@ -24,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 //        val splashScreen = installSplashScreen()
-
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         // 2. Giữ Splash Screen hiển thị cho đến khi load xong data
@@ -32,7 +32,6 @@ class MainActivity : ComponentActivity() {
 //            viewModel.isLoading.value
 //        }
 
-        enableEdgeToEdge()
         setContent {
             StampIDComposeTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->

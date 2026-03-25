@@ -35,7 +35,8 @@ import com.barefeet.stampid_compose.utils.noRippleClickable
 fun SettingScreen(
     modifier: Modifier = Modifier,
     settingVM: SettingViewModel = viewModel(),
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onIAPClick: () -> Unit
 ) {
 
     LaunchedEffect(Unit) {
@@ -45,7 +46,7 @@ fun SettingScreen(
                     onBackClick()
                 }
                 is SettingUiEffect.NavigateToIAP -> {
-
+                    onIAPClick()
                 }
                 is SettingUiEffect.NavigateToMembership -> {
 
@@ -265,6 +266,7 @@ fun Legalsection(
 @Composable
 private fun SettingScreenPrev() {
     SettingScreen(
-        onBackClick = {}
+        onBackClick = {},
+        onIAPClick = {}
     )
 }
