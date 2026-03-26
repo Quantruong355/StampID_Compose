@@ -17,7 +17,7 @@ sealed class CameraUiEvent {
     object OnGalleryClick : CameraUiEvent()
     object OnSnaptipToggle : CameraUiEvent()
 
-    data class OnImageCaptured(val uri: Uri) : CameraUiEvent()
+    data class OnImageCropped(val uri: Uri) : CameraUiEvent()
     data class OnImagePicked(val uri: Uri) : CameraUiEvent()
     data class onCameraError(val message: String) : CameraUiEvent()
 }
@@ -25,6 +25,7 @@ sealed class CameraUiEvent {
 sealed class CameraUiEffect {
     object CloseScreen : CameraUiEffect()
     object LaunchGalleryPicker : CameraUiEffect()
+    data class StartCropImage(val uri: Uri) : CameraUiEffect()
     data class NavigateToLoading(val uri: Uri) : CameraUiEffect()
     data class ShowToast(val message: String) : CameraUiEffect()
 }

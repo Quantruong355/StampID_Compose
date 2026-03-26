@@ -7,3 +7,11 @@ plugins {
     id("com.google.dagger.hilt.android") version "2.59" apply false
     id("com.google.devtools.ksp") version "1.9.0-1.0.13" apply false
 }
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url = uri("https://jitpack.io") }
+    }
+}

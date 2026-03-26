@@ -1,6 +1,7 @@
 package com.barefeet.stampid_compose.screens.camera
 
 import android.Manifest
+import android.app.Activity
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
@@ -9,7 +10,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.ImageCapture
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,21 +35,21 @@ import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.barefeet.stampid_compose.R
-import com.barefeet.stampid_compose.screens.home.HomeUiEvent
 import com.barefeet.stampid_compose.utils.noRippleClickable
+import com.barefeet.stampid_compose.utils.startCrop
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
+import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.delay
+import java.io.File
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -76,6 +76,18 @@ fun CameraScreen(
             .build()
     }
 
+    val cropLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val resultUri = UCrop.getOutput(result.data!!)
+            resultUri?.let { cameraVM.onEvent(CameraUiEvent.OnImageCropped(it)) }
+        } else if (result.resultCode == UCrop.RESULT_ERROR) {
+            val cropError = UCrop.getError(result.data!!)
+            cameraVM.onEvent(CameraUiEvent.onCameraError(cropError?.message.toString()))
+        }
+    }
+
 
     BackHandler(enabled = uiState.isCapturing) { }
 
@@ -94,6 +106,25 @@ fun CameraScreen(
 
                 is CameraUiEffect.ShowToast -> {
                     Toast.makeText(ctx, effect.message, Toast.LENGTH_SHORT).show()
+                }
+
+                is CameraUiEffect.StartCropImage -> {
+                    val destinationUri = Uri.fromFile(
+                        File(
+                            ctx.cacheDir,
+                            "CROP_${System.currentTimeMillis()}.jpg"
+                        )
+                    )
+                    startCrop(
+                        sourceUri = effect.uri,
+                        destinationUri = destinationUri,
+                        context = ctx,
+                        launcher = cropLauncher
+                    )
+                }
+
+                is CameraUiEffect.NavigateToLoading -> {
+
                 }
             }
         }

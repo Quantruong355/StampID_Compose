@@ -87,4 +87,7 @@ dependencies {
     implementation("androidx.camera:camera-view:${camerax_version}")
 
     implementation("com.google.accompanist:accompanist-permissions:0.35.0-alpha")
+
+    //Ucrop
+    implementation("com.github.yalantis:ucrop:2.2.11")
 }
