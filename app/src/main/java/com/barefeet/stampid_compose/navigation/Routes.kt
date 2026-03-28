@@ -31,4 +31,7 @@ sealed interface Routes {
 
     @Serializable
     object CameraScreen : Routes
+
+    @Serializable
+    object LoadingScreen : Routes
 }

@@ -27,6 +27,7 @@ import com.barefeet.stampid_compose.screens.collection.CollectionScreen
 import com.barefeet.stampid_compose.screens.home.HomeScreen
 import com.barefeet.stampid_compose.screens.home.HomeViewModel
 import com.barefeet.stampid_compose.screens.iap.IAPScreen
+import com.barefeet.stampid_compose.screens.loading.LoadingScreen
 import com.barefeet.stampid_compose.screens.setting.SettingScreen
 
 @Composable
@@ -130,14 +131,34 @@ fun BottomNavGraph(
             enterTransition = {
                 slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Up, animationSpec = tween(600))
             },
+
             exitTransition = {
-                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Down,animationSpec = tween(600))
-            }
+                if (targetState.destination.hasRoute<Routes.LoadingScreen>()) {
+                    slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left, animationSpec = tween(600))
+                } else {
+                    slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Down, animationSpec = tween(600))
+                }
+            },
+
+            popEnterTransition = {
+                    slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Right, animationSpec = tween(600))
+            },
         ){
             CameraScreen(
-                onBack = { navController.navigateUp() }
+                onBack = { navController.navigateUp() },
+                onNavigateLoading = { navController.navigate(Routes.LoadingScreen) }
             )
         }
 
+        composable<Routes.LoadingScreen>(
+            enterTransition = {
+                slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left, animationSpec = tween(600))
+            },
+            exitTransition = {
+                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Right, animationSpec = tween(600))
+            }
+        ) {
+            LoadingScreen()
+        }
     }
 }

@@ -55,7 +55,9 @@ import java.io.File
 @Composable
 fun CameraScreen(
     cameraVM: CameraViewModel = hiltViewModel(),
+    onNavigateLoading: () -> Unit,
     onBack: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val uiState by cameraVM.uiState.collectAsStateWithLifecycle()
     val cameraPermissionState = rememberPermissionState(
@@ -101,7 +103,7 @@ fun CameraScreen(
                 }
 
                 is CameraUiEffect.NavigateToLoading -> {
-
+                    onNavigateLoading()
                 }
 
                 is CameraUiEffect.ShowToast -> {
@@ -122,20 +124,16 @@ fun CameraScreen(
                         launcher = cropLauncher
                     )
                 }
-
-                is CameraUiEffect.NavigateToLoading -> {
-
-                }
             }
         }
     }
 
-    Box(){
+    Box(modifier = modifier.fillMaxSize()){
         CameraContent(
             isPermissionGranted = cameraPermissionState.status.isGranted,
             onEvent = cameraVM::onEvent,
             imageCapture = imageCapture,
-            isInteractionEnabled = isInteractionEnabled
+            isInteractionEnabled = isInteractionEnabled,
         )
 
         if(uiState.showSnapTip){
@@ -221,13 +219,14 @@ fun CameraBody(
             )
         }
 
-        if (isPermissionGranted) {
-            CameraPreview(
-                modifier = Modifier
-                    .padding(bottom = 40.dp),
-                imageCapture = imageCapture
-            )
+            if (isPermissionGranted) {
+                CameraPreview(
+                    modifier = Modifier
+                        .padding(bottom = 40.dp),
+                    imageCapture = imageCapture
+                )
         }
+
     }
 }
 
