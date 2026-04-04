@@ -50,6 +50,7 @@
     <string name="camera_text1">Gallery</string>
     <string name="camera_text2">Snap tips</string>
 
+
     <!-- SnapTip Texts -->
     <string name="snaptip_text1">Don\'t take photos too</string>
     <string name="snaptip_text2">far away</string>
@@ -59,4 +60,8 @@
     <string name="snaptip_text7">Don\'t let the photo be</string>
     <string name="snaptip_text8">too blurry</string>
     <string name="snaptip_text9">For accurate results, try another position if the initial one yields incorrect outcomes.</string>
+
+    <!-- Loading Texts -->
+    <string name="loading_text1">Indentify in progress...</string>
+    <string name="loading_text2">this may take up to 15 seconds</string>
 </resources>

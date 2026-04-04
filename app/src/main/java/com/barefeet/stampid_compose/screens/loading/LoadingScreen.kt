@@ -1,5 +1,8 @@
 package com.barefeet.stampid_compose.screens.loading
 
+import android.net.Uri
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -9,26 +12,73 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.barefeet.stampid_compose.R
+import com.barefeet.stampid_compose.model.StampDataResponse
 
 @Composable
-fun LoadingScreen(modifier: Modifier = Modifier) {
+fun LoadingScreen(
+    modifier: Modifier = Modifier,
+    imageUri: String,
+    loadingVM: LoadingViewModel = hiltViewModel(),
+    onNavigateBack: () -> Unit,
+    onNavigateToBestMatch: (List<StampDataResponse>) -> Unit
+    ) {
 
-    BackHandler(enabled = false) { }
+    val uiState by loadingVM.uiState.collectAsStateWithLifecycle()
+    val ctx = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        loadingVM.identifyStamp(imageUri)
+    }
+
+    LaunchedEffect(Unit) {
+        loadingVM.effect.collect { effect ->
+            when (effect) {
+                is LoadingUiEffect.ShowToast -> {
+                    Toast.makeText(ctx, effect.message, Toast.LENGTH_SHORT).show()
+                }
+
+                is LoadingUiEffect.NavigateToBestMatch -> {
+                    Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show()
+                }
+
+                is LoadingUiEffect.NavigateBack -> {
+                    onNavigateBack()
+                }
+            }
+        }
+    }
+
+    BackHandler(enabled = true) { }
 
     LoadingContent(
         modifier = modifier
@@ -43,8 +93,12 @@ fun LoadingContent(modifier: Modifier = Modifier) {
         modifier = modifier,
         contentAlignment = Alignment.Center
         ){
-        Column(){
+        Column(
+            modifier = Modifier,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
             ScanningView()
+            LoadingTextsView()
         }
     }
 
@@ -87,7 +141,7 @@ fun ScanningView(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.TopCenter)
-                .graphicsLayer{
+                .graphicsLayer {
                     val isGoingDown = phase <= 1f
                     val currentPosition = if (isGoingDown) phase else (2f - phase)
 
@@ -107,10 +161,52 @@ fun ScanningView(modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+fun LoadingTextsView(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier.padding(top = 30.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier.size(18.dp),
+            color = colorResource(R.color.black),
+            strokeWidth = 2.dp
+        )
+
+        Text(
+            text = stringResource(R.string.loading_text1),
+            modifier = Modifier.padding(start = 10.dp),
+            color = colorResource(R.color.black),
+            style = TextStyle(
+                fontSize = 16.sp,
+                fontFamily = FontFamily(Font(R.font.onest_semibold)),
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            )
+        )
+    }
+
+    Text(
+        text = stringResource(R.string.loading_text2),
+        modifier = Modifier.padding(top = 10.dp),
+        color = colorResource(R.color.gray_2),
+        style = TextStyle(
+            fontSize = 13.sp,
+            fontFamily = FontFamily(Font(R.font.onest_regular)),
+            platformStyle = PlatformTextStyle(
+                includeFontPadding = false
+            )
+        )
+    )
+
+}
+
 @Preview
 @Composable
 private fun LoadingScreenPreview() {
-    LoadingScreen(
+    LoadingContent(
         modifier = Modifier
     )
 }

@@ -44,7 +44,6 @@ fun CameraPreview(
                         it.setSurfaceProvider(previewView.surfaceProvider)
                     }
 
-
                     val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
                     try {

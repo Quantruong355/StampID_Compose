@@ -55,7 +55,7 @@ import java.io.File
 @Composable
 fun CameraScreen(
     cameraVM: CameraViewModel = hiltViewModel(),
-    onNavigateLoading: () -> Unit,
+    onNavigateLoading: (Uri) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -103,7 +103,7 @@ fun CameraScreen(
                 }
 
                 is CameraUiEffect.NavigateToLoading -> {
-                    onNavigateLoading()
+                    onNavigateLoading(effect.uri)
                 }
 
                 is CameraUiEffect.ShowToast -> {

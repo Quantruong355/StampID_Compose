@@ -59,7 +59,6 @@ class CameraViewModel @Inject constructor(
     }
 
     private fun handleImageCropped(uri: Uri) {
-        cameraManager.deleteTempFile(uri)
         sendEffect(CameraUiEffect.NavigateToLoading(uri))
     }
 

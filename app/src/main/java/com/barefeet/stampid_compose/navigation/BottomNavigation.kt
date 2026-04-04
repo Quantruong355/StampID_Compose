@@ -1,5 +1,6 @@
 package com.barefeet.stampid_compose.navigation
 
+import android.net.Uri
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
@@ -146,7 +147,10 @@ fun BottomNavGraph(
         ){
             CameraScreen(
                 onBack = { navController.navigateUp() },
-                onNavigateLoading = { navController.navigate(Routes.LoadingScreen) }
+                onNavigateLoading = { uri ->
+                    val imageUri = Uri.encode(uri.toString())
+                    navController.navigate(Routes.LoadingScreen(imageUri = imageUri))
+                }
             )
         }
 
@@ -157,8 +161,15 @@ fun BottomNavGraph(
             exitTransition = {
                 slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Right, animationSpec = tween(600))
             }
-        ) {
-            LoadingScreen()
+        ) { backStackEntry ->
+            val loadingRoute = backStackEntry.toRoute<Routes.LoadingScreen>()
+            val decodedUri = Uri.decode(loadingRoute.imageUri)
+
+            LoadingScreen(
+                imageUri = decodedUri,
+                onNavigateBack = { navController.navigateUp() },
+                onNavigateToBestMatch = { }
+            )
         }
     }
 }

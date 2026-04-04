@@ -1,0 +1,30 @@
+package com.barefeet.stampid_compose.model
+
+import com.google.gson.annotations.SerializedName
+
+data class StampDataResponse(
+    @SerializedName("name") val name: String,
+    @SerializedName("description") val description: String,
+    @SerializedName("image") val image: String,
+    @SerializedName("product_price") val productPrice: String,
+    @SerializedName("attributes") val attributes: StampAttributes,
+    @SerializedName("market_items") val marketItems: List<MarketItem>
+)
+
+data class StampAttributes(
+    @SerializedName("country") val country: String,
+    @SerializedName("issued_on") val issuedOn: String,
+    @SerializedName("color") val color: String,
+    @SerializedName("face_value") val faceValue: String,
+    @SerializedName("series") val series: String,
+    @SerializedName("min_price") val minPrice: Double,
+    @SerializedName("max_price") val maxPrice: Double
+)
+
+data class MarketItem(
+    @SerializedName("title") val title: String,
+    @SerializedName("price") val price: Double,
+    @SerializedName("link") val link: String,
+    @SerializedName("thumbnail") val thumbnail: String,
+    @SerializedName("currency") val currency: String
+)

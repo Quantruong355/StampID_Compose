@@ -16,26 +16,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
-data class HomeUiState(
-    val articles: List<Article> = emptyList(),
-    val isLoading: Boolean = false,
-    val error: String? = null
-)
-
-sealed class HomeUiEvent {
-    object OnSearchClick : HomeUiEvent()
-    object OnIAPClick : HomeUiEvent()
-    object OnSettingClick : HomeUiEvent()
-    data class OnArticleClick(val article: Int) : HomeUiEvent()
-}
-
-sealed class HomeUiEffect {
-    object NavigateToSetting : HomeUiEffect()
-    object NavigateToSearch : HomeUiEffect()
-    object NavigateToIAP : HomeUiEffect()
-    data class NavigateToArticleDetail(val article: Int) : HomeUiEffect()
-}
-
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _uiState = MutableStateFlow(HomeUiState())
@@ -67,7 +47,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun loadData() {
-        // Chạy trong viewModelScope (Background Thread)
         viewModelScope.launch(Dispatchers.IO) {
             val context = getApplication<Application>().applicationContext
             val data = loadArticlesFromAssets(context) ?: emptyList()
