@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.barefeet.stampid_compose.R
+import com.barefeet.stampid_compose.utils.clickableSafe
 
 @Composable
 fun IAPBanner(
@@ -38,7 +39,8 @@ fun IAPBanner(
                 painter = painterResource(id = R.drawable.iap_banner_bg),
                 contentScale = ContentScale.FillWidth
             )
-            .clickable(
+            .clickableSafe(
+                showRipple = true,
                 onClick = onClick
             )
     ){

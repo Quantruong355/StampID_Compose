@@ -1,7 +1,9 @@
 package com.barefeet.stampid_compose.model
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class StampDataResponse(
     @SerializedName("name") val name: String,
     @SerializedName("description") val description: String,
@@ -11,6 +13,7 @@ data class StampDataResponse(
     @SerializedName("market_items") val marketItems: List<MarketItem>
 )
 
+@Serializable
 data class StampAttributes(
     @SerializedName("country") val country: String,
     @SerializedName("issued_on") val issuedOn: String,
@@ -21,6 +24,7 @@ data class StampAttributes(
     @SerializedName("max_price") val maxPrice: Double
 )
 
+@Serializable
 data class MarketItem(
     @SerializedName("title") val title: String,
     @SerializedName("price") val price: Double,

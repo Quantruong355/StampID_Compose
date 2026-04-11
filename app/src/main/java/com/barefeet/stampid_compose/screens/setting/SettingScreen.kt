@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.barefeet.stampid_compose.R
 import com.barefeet.stampid_compose.UI_Common.IAPBanner
+import com.barefeet.stampid_compose.utils.clickableSafe
 import com.barefeet.stampid_compose.utils.noRippleClickable
 
 @Composable
@@ -124,7 +125,7 @@ fun SettingHeader(
             modifier = Modifier
                 .align(Alignment.CenterStart)
                 .padding(start = 16.dp)
-                .noRippleClickable{onBackClick() }
+                .clickableSafe{onBackClick() }
         )
 
         Text(
@@ -160,7 +161,7 @@ fun MembershipSection(
         modifier = modifier
             .padding(top= 15.dp)
             .fillMaxWidth()
-            .noRippleClickable{ onClick() }
+            .clickableSafe{ onClick() }
     ) {
         Image(
             painter = painterResource(R.drawable.diamond_icon),
@@ -220,7 +221,7 @@ fun Legalsection(
     Row(modifier = modifier
         .fillMaxWidth()
         .padding(top= 25.dp)
-        .noRippleClickable{ onPrivacyClick() }
+        .clickableSafe{ onPrivacyClick() }
     ){
         Image(
             painter = painterResource(R.drawable.privacy_icon),
@@ -243,7 +244,7 @@ fun Legalsection(
         modifier = modifier
             .fillMaxWidth()
             .padding(top= 30.dp)
-            .noRippleClickable{ onTermClick() }
+            .clickableSafe{ onTermClick() }
     ){
         Image(
             painter = painterResource(R.drawable.term_icon),

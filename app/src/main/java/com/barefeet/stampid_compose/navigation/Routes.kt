@@ -33,5 +33,8 @@ sealed interface Routes {
     object CameraScreen : Routes
 
     @Serializable
-    data class LoadingScreen(val imageUri: String) : Routes
+    data class LoadingScreen(val imageUri: String?) : Routes
+
+    @Serializable
+    object ResultScreen : Routes
 }

@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.barefeet.stampid_compose.R
 import com.barefeet.stampid_compose.navigation.Routes
+import com.barefeet.stampid_compose.utils.clearOldCache
 import kotlinx.coroutines.delay
 
 @Composable
@@ -25,7 +26,11 @@ fun SplashScreen(
     navController: NavController
     ) {
 
+    val context = LocalContext.current
+
     LaunchedEffect(targetRoute) {
+        clearOldCache(context)
+
         if(targetRoute != null) {
             delay(2000)
             navController.navigate(targetRoute) {

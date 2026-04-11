@@ -44,6 +44,7 @@ import com.barefeet.stampid_compose.screens.home.ArticleItem
 import com.barefeet.stampid_compose.screens.iap.HeadDiamondSection
 import com.barefeet.stampid_compose.screens.iap.IAPFeatures
 import com.barefeet.stampid_compose.screens.iap.IAPPriceBoard
+import com.barefeet.stampid_compose.utils.clickableSafe
 import com.barefeet.stampid_compose.utils.noRippleClickable
 
 @Composable
@@ -89,7 +90,7 @@ fun ArticleContent(
                 modifier = Modifier
                     .padding(top = 40.dp)
                     .padding(end = 20.dp)
-                    .noRippleClickable {
+                    .clickableSafe {
                         onBackClick()
                     }
             ) {

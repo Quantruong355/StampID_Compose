@@ -29,6 +29,25 @@
     <string name="setting_text6">Privacy Policy</string>
     <string name="setting_text7">Terms of Use</string>
 
+    <!-- Collection Texts -->
+    <string name="collection_text1">Collection</string>
+    <string name="collection_text2">Stamps</string>
+    <string name="collection_text3">Countries</string>
+    <string name="collection_text4">All Collections (%d)</string>
+    <string name="collection_text5">All History (%d)</string>
+    <string name="collection_text6">New Collection</string>
+    <string name="collection_text7">Sort by</string>
+    <string name="collection_text8">Your collection is empty</string>
+    <string name="collection_text9">Tap here to add your first collection</string>
+    <string name="collection_text10">Your history is empty</string>
+    <string name="collection_text11">Tap here to add your first stamp</string>
+    <string name="collection_text12">Add collection</string>
+    <string name="collection_text13">Add stamp</string>
+    <string name="collection_text14">Enter a name for this collection.</string>
+    <string name="collection_text15">Cancel</string>
+    <string name="collection_text16">Save</string>
+    <string name="collection_text17">Collection name</string>
+
     <!-- IAP Texts -->
     <string name="iap_text1">Upgrade Premium</string>
     <string name="iap_text2">Unlock to get premium features!</string>
@@ -64,4 +83,7 @@
     <!-- Loading Texts -->
     <string name="loading_text1">Indentify in progress...</string>
     <string name="loading_text2">this may take up to 15 seconds</string>
+
+    <!-- Bestmatch Texts -->
+    <string name="bestmatch_text1">Best Matches</string>
 </resources>

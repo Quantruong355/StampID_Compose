@@ -68,7 +68,7 @@ class LoadingViewModel @Inject constructor(
                 _effect.emit(LoadingUiEffect.NavigateBack)
             } finally {
                 _uiState.update { it.copy(isIdentifying = false) }
-                cameraManager.deleteTempFile(Uri.parse(uri))
+//                cameraManager.deleteTempFile(Uri.parse(uri))
             }
         }
     }

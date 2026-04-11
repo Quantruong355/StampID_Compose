@@ -68,7 +68,7 @@ fun LoadingScreen(
                 }
 
                 is LoadingUiEffect.NavigateToBestMatch -> {
-                    Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show()
+                    onNavigateToBestMatch(effect.data)
                 }
 
                 is LoadingUiEffect.NavigateBack -> {

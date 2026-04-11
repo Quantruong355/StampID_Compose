@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.barefeet.stampid_compose.R
+import com.barefeet.stampid_compose.utils.clickableSafe
 import com.barefeet.stampid_compose.utils.noRippleClickable
 
 @Composable
@@ -80,7 +81,7 @@ fun SnapTipView(
                             contentDescription = null,
                             modifier = Modifier
                                 .align(Alignment.BottomEnd)
-                                .noRippleClickable { onDismiss() }
+                                .clickableSafe { onDismiss() }
                         )
                     }
 

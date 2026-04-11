@@ -48,6 +48,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.barefeet.stampid_compose.R
 import com.barefeet.stampid_compose.UI_Common.CommonButton
+import com.barefeet.stampid_compose.utils.clickableSafe
 import com.barefeet.stampid_compose.utils.noRippleClickable
 import org.w3c.dom.Text
 
@@ -100,7 +101,7 @@ fun IAPContent(
                 contentDescription = null,
                 modifier = Modifier
                     .align(Alignment.CenterStart)
-                    .noRippleClickable{ onBackClick() }
+                    .clickableSafe{ onBackClick() }
             )}
     }
 }
@@ -272,7 +273,7 @@ fun IAPPriceBoard(
             .clip(cornerShape)
             .background(Color.White)
             .padding(horizontal = 10.dp)
-            .noRippleClickable{ onPlanSelected(item.plan) },
+            .clickableSafe{ onPlanSelected(item.plan) },
 
         verticalAlignment = Alignment.CenterVertically
     ){

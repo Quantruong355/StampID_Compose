@@ -55,7 +55,9 @@ import coil3.transform.RoundedCornersTransformation
 import com.barefeet.stampid_compose.R
 import com.barefeet.stampid_compose.UI_Common.IAPBanner
 import com.barefeet.stampid_compose.data.Article
+import com.barefeet.stampid_compose.utils.clickableSafe
 import com.barefeet.stampid_compose.utils.loadArticlesFromAssets
+import com.valentinilk.shimmer.shimmer
 import kotlinx.coroutines.flow.collect
 
 @Composable
@@ -163,7 +165,7 @@ fun HomeHeader(
                 painter = painterResource(id = R.drawable.setting_icon),
                 contentDescription = null,
                 modifier = Modifier
-                    .clickable(onClick = onSettingClick)
+                    .clickableSafe(onClick = onSettingClick)
             )
         }
 
@@ -234,7 +236,7 @@ fun ArticleItem(
 
     Column(
         modifier = Modifier
-            .clickable(onClick = onClick)
+            .clickableSafe(showRipple = true, onClick = onClick)
             .padding(horizontal = 10.dp)
             .padding(top = 10.dp)
     ) {

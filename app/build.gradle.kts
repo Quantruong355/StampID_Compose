@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.ui)
     implementation(libs.firebase.crashlytics.buildtools)
+    implementation(libs.androidx.compose.runtime)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -114,6 +115,8 @@ dependencies {
     // Kotlinx Serialization
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+
+    implementation("com.valentinilk.shimmer:compose-shimmer:1.3.3")
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
 

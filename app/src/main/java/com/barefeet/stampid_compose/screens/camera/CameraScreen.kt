@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.barefeet.stampid_compose.R
+import com.barefeet.stampid_compose.utils.clickableSafe
 import com.barefeet.stampid_compose.utils.noRippleClickable
 import com.barefeet.stampid_compose.utils.startCrop
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -212,8 +213,9 @@ fun CameraBody(
                 contentDescription = null,
                 modifier = Modifier
                     .padding(15.dp)
-                    .noRippleClickable(
+                    .clickableSafe(
                         enabled = isInteractionEnabled,
+                        showRipple = false,
                         onClick = { onEvent(CameraUiEvent.OnCloseClick) }
                     )
             )
@@ -250,8 +252,9 @@ fun CameraOption(
             icon = R.drawable.gallery_icon,
             title = R.string.camera_text1,
             modifier = Modifier
-                .noRippleClickable(
+                .clickableSafe(
                     enabled = isInteractionEnabled,
+                    showRipple = false,
                     onClick = {  onEvent(CameraUiEvent.OnGalleryClick) }
                 )
         )
@@ -262,7 +265,7 @@ fun CameraOption(
             modifier = Modifier
                 .padding(horizontal = 50.dp)
                 .size(72.dp)
-                .noRippleClickable(
+                .clickableSafe(
                     enabled = isInteractionEnabled,
                     onClick = { onEvent(CameraUiEvent.OnCaptureClick(imageCapture = imageCapture)) }
                 )
@@ -272,7 +275,9 @@ fun CameraOption(
             icon = R.drawable.snap_tip_icon,
             title = R.string.camera_text2,
                     modifier = Modifier
-                    .noRippleClickable{ onEvent(CameraUiEvent.OnSnaptipToggle)}
+                    .clickableSafe{
+                        onEvent(CameraUiEvent.OnSnaptipToggle)
+                    }
         )
     }
 }
