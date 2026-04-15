@@ -111,7 +111,8 @@ fun HomeContent(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(colorResource(R.color.white_2)),
+            .background(colorResource(R.color.white_2))
+        ,
         contentPadding = PaddingValues(bottom = 170.dp)
     ) {
         item {

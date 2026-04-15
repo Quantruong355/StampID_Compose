@@ -1,6 +1,8 @@
 package com.barefeet.stampid_compose.screens.main
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Spacer
@@ -72,8 +74,8 @@ fun MainScreen(
             if (currentRoute != null) {
                 AnimatedVisibility(
                     visible = showBottomBar,
-                    enter = slideInVertically(initialOffsetY = { it }),
-                    exit = slideOutVertically(targetOffsetY = { it })
+                    enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
+                    exit = slideOutVertically(targetOffsetY = { it }) + fadeOut()
                 ) {
                     BottomNavBar(bottomNavController, currentRoute)
                 }
