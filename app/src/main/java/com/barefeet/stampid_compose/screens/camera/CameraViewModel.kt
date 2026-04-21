@@ -15,9 +15,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class CameraViewModel @Inject constructor(
-    private val cameraManager: CameraManager
-) : ViewModel() {
+class CameraViewModel @Inject constructor() : ViewModel() {
     private val _uiState = MutableStateFlow(CameraUiState())
     val uiState = _uiState.asStateFlow()
 
@@ -27,30 +25,27 @@ class CameraViewModel @Inject constructor(
     fun onEvent(event: CameraUiEvent){
         when(event){
             is CameraUiEvent.OnCloseClick ->    sendEffect(CameraUiEffect.CloseScreen)
-            is CameraUiEvent.OnCaptureClick ->  handleCapture(event.imageCapture)
+            is CameraUiEvent.OnCaptureClick ->  handleCapture()
+            is CameraUiEvent.OnImageCaptured -> handleImageCaptured(event.uri)
             is CameraUiEvent.OnGalleryClick ->  sendEffect(CameraUiEffect.LaunchGalleryPicker)
             is CameraUiEvent.OnSnaptipToggle -> toggleSnapTip()
             is CameraUiEvent.OnImagePicked ->   handleImagePicked(event.uri)
             is CameraUiEvent.onCameraError ->   handleError(event.message)
             is CameraUiEvent.OnImageCropped ->  handleImageCropped(event.uri)
+            is CameraUiEvent.OnCameraReady ->   _uiState.update { it.copy(isCameraReady = event.isReady) }
 
         }
     }
 
-    private fun handleCapture(imageCapture: ImageCapture) {
+    private fun handleCapture() {
+        if (_uiState.value.isCapturing || !_uiState.value.isCameraReady) return
         _uiState.update { it.copy(isCapturing = true) }
+        sendEffect(CameraUiEffect.TriggerCapture)
+    }
 
-        cameraManager.takePhoto(
-            imageCapture = imageCapture,
-            onImageSaved = { uri ->
-                _uiState.update { it.copy(isCapturing = false) }
-                sendEffect(CameraUiEffect.StartCropImage(uri))
-            },
-            onError = { error ->
-                _uiState.update { it.copy(isCapturing = false) }
-                sendEffect(CameraUiEffect.ShowToast("Error: ${error.message}"))
-            }
-        )
+    private fun handleImageCaptured(uri: Uri) {
+        _uiState.update { it.copy(isCapturing = false) }
+        sendEffect(CameraUiEffect.StartCropImage(uri))
     }
 
     private fun handleImagePicked(uri: Uri) {

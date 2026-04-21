@@ -177,7 +177,7 @@ fun BottomNavGraph(
 
 //            val loadingRoute = backStackEntry.toRoute<Routes.LoadingScreen>()
 //            val decodedUri = Uri.decode(loadingRoute.imageUri)
-            val decodedUri = sharedResultVM.userImageUri.toString()
+            val decodedUri = sharedResultVM.userImageUri.value.toString()
 
             LoadingScreen(
                 imageUri = decodedUri,

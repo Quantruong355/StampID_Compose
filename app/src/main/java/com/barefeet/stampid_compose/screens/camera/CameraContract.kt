@@ -13,18 +13,21 @@ data class CameraUiState(
 
 sealed class CameraUiEvent {
     object OnCloseClick : CameraUiEvent()
-    data class OnCaptureClick(val imageCapture: ImageCapture) : CameraUiEvent()
+    object OnCaptureClick : CameraUiEvent()
     object OnGalleryClick : CameraUiEvent()
     object OnSnaptipToggle : CameraUiEvent()
 
+    data class OnImageCaptured(val uri: Uri) : CameraUiEvent()
     data class OnImageCropped(val uri: Uri) : CameraUiEvent()
     data class OnImagePicked(val uri: Uri) : CameraUiEvent()
     data class onCameraError(val message: String) : CameraUiEvent()
+    data class OnCameraReady(val isReady: Boolean) : CameraUiEvent()
 }
 
 sealed class CameraUiEffect {
     object CloseScreen : CameraUiEffect()
     object LaunchGalleryPicker : CameraUiEffect()
+    object TriggerCapture : CameraUiEffect()
     data class StartCropImage(val uri: Uri) : CameraUiEffect()
     data class NavigateToLoading(val uri: Uri) : CameraUiEffect()
     data class ShowToast(val message: String) : CameraUiEffect()

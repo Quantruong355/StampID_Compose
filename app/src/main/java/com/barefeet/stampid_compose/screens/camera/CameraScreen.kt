@@ -41,15 +41,14 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.barefeet.stampid_compose.R
+import com.barefeet.stampid_compose.utils.CameraManager
 import com.barefeet.stampid_compose.utils.clickableSafe
-import com.barefeet.stampid_compose.utils.noRippleClickable
 import com.barefeet.stampid_compose.utils.startCrop
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import com.yalantis.ucrop.UCrop
-import kotlinx.coroutines.delay
 import java.io.File
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -64,8 +63,9 @@ fun CameraScreen(
     val cameraPermissionState = rememberPermissionState(
         permission = Manifest.permission.CAMERA
     )
-    val isInteractionEnabled = !uiState.isCapturing
+    val isInteractionEnabled = !uiState.isCapturing  && uiState.isCameraReady
     val ctx = LocalContext.current
+    val cameraManager = remember { CameraManager(ctx) }
 
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -125,6 +125,18 @@ fun CameraScreen(
                         launcher = cropLauncher
                     )
                 }
+
+                is CameraUiEffect.TriggerCapture -> {
+                    cameraManager.takePhoto(
+                        imageCapture = imageCapture,
+                        onImageSaved = { uri ->
+                            cameraVM.onEvent(CameraUiEvent.OnImageCaptured(uri))
+                        },
+                        onError = { error ->
+                            cameraVM.onEvent(CameraUiEvent.onCameraError(error.message ?: "Unknown error"))
+                        }
+                    )
+                }
             }
         }
     }
@@ -149,17 +161,16 @@ fun CameraScreen(
         if (cameraPermissionState.status.shouldShowRationale) {
             AlertDialog(
                 onDismissRequest = { /* ... */ },
-                title = { Text("Camera Permission Require") },
-                text = { Text("App cần camera để chụp ảnh. Cho phép nhé?") },
+                title = { Text(stringResource(R.string.camera_permission_title)) },
+                text = { Text(stringResource(R.string.camera_permission_rationale)) },
                 confirmButton = {
                     Button(onClick = { cameraPermissionState.launchPermissionRequest() }) {
-                        Text("OK")
+                        Text(stringResource(R.string.camera_permission_ok))
                     }
                 }
             )
         } else {
             LaunchedEffect(Unit) {
-                delay(300)
                 cameraPermissionState.launchPermissionRequest()
             }
         }
@@ -188,7 +199,6 @@ private fun CameraContent(
         CameraOption(
             modifier = Modifier,
             onEvent = onEvent,
-            imageCapture = imageCapture,
             isInteractionEnabled = isInteractionEnabled
         )
     }
@@ -221,21 +231,22 @@ fun CameraBody(
             )
         }
 
-            if (isPermissionGranted) {
-                CameraPreview(
-                    modifier = Modifier
-                        .padding(bottom = 40.dp),
-                    imageCapture = imageCapture
-                )
+        if (isPermissionGranted) {
+            CameraPreview(
+                modifier = Modifier
+                    .padding(bottom = 40.dp),
+                imageCapture = imageCapture,
+                onCameraReady = { ready ->
+                    onEvent(CameraUiEvent.OnCameraReady(ready))
+                }
+            )
         }
-
     }
 }
 
 @Composable
 fun CameraOption(
     onEvent: (CameraUiEvent) -> Unit,
-    imageCapture: ImageCapture,
     isInteractionEnabled: Boolean,
     modifier: Modifier = Modifier
 ) {
@@ -267,17 +278,17 @@ fun CameraOption(
                 .size(72.dp)
                 .clickableSafe(
                     enabled = isInteractionEnabled,
-                    onClick = { onEvent(CameraUiEvent.OnCaptureClick(imageCapture = imageCapture)) }
+                    onClick = { onEvent(CameraUiEvent.OnCaptureClick) }
                 )
         )
 
         CommonOptionButtonCamera(
             icon = R.drawable.snap_tip_icon,
             title = R.string.camera_text2,
-                    modifier = Modifier
-                    .clickableSafe{
-                        onEvent(CameraUiEvent.OnSnaptipToggle)
-                    }
+            modifier = Modifier
+                .clickableSafe{
+                    onEvent(CameraUiEvent.OnSnaptipToggle)
+                }
         )
     }
 }
@@ -316,7 +327,6 @@ fun CommonOptionButtonCamera(
     }
 }
 
-//-----------------------------------------------------//
 @Preview
 @Composable
 private fun CommonOptionButtonCameraPrev() {
@@ -332,7 +342,6 @@ private fun CameraOptionPrev() {
     CameraOption(
         modifier = Modifier,
         onEvent = {},
-        imageCapture = ImageCapture.Builder().build(),
         isInteractionEnabled = true
     )
 }

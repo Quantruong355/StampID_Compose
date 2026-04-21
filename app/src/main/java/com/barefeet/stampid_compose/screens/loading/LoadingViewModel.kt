@@ -53,6 +53,7 @@ class LoadingViewModel @Inject constructor(
 
                 if (response.response_code == 0) {
                     _effect.emit(LoadingUiEffect.NavigateToBestMatch(response.data))
+                    Log.d("AESDecryptor", "$response.data")
                 } else {
                     _uiState.update { it.copy(error = response.message) }
                     _effect.emit(LoadingUiEffect.ShowToast(response.message))

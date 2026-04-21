@@ -1,21 +1,18 @@
 package com.barefeet.stampid_compose.screens.loading
 
 import android.net.Uri
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.barefeet.stampid_compose.model.StampDataResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import javax.inject.Inject
 
 @HiltViewModel
 class StampResultViewModel @Inject constructor() : ViewModel() {
 
-    var userImageUri by mutableStateOf<Uri?>(null)
-        private set
+    private val _userImageUri = MutableStateFlow<Uri?>(null)
+    val userImageUri = _userImageUri.asStateFlow()
 
     private val _scanResult = MutableStateFlow<List<StampDataResponse>>(emptyList())
     val scanResult = _scanResult.asStateFlow()
@@ -25,11 +22,11 @@ class StampResultViewModel @Inject constructor() : ViewModel() {
     }
 
     fun updateCapturedImage(uri: Uri) {
-        userImageUri = uri
+        _userImageUri.value = uri
     }
 
     fun clearData() {
         _scanResult.value = emptyList()
-        userImageUri = null
+        _userImageUri.value = null
     }
 }

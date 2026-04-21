@@ -68,6 +68,9 @@
     <!-- Camera Texts -->
     <string name="camera_text1">Gallery</string>
     <string name="camera_text2">Snap tips</string>
+    <string name="camera_permission_title">Camera Permission Required</string>
+    <string name="camera_permission_rationale">The app needs camera access to take photos of stamps. Allow access?</string>
+    <string name="camera_permission_ok">OK</string>
 
 
     <!-- SnapTip Texts -->

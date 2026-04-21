@@ -32,11 +32,13 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 @Composable
 fun CameraPreview(
     imageCapture: ImageCapture,
+    onCameraReady: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
     val lifecycleOwner = LocalLifecycleOwner.current
     var isStreaming by remember { mutableStateOf(false) }
+    var cameraProvider: ProcessCameraProvider? by remember { mutableStateOf(null) }
 
     Box(modifier = modifier.fillMaxSize()) {
         AndroidView(
@@ -44,13 +46,16 @@ fun CameraPreview(
                 val previewView = PreviewView(ctx)
 
                 previewView.previewStreamState.observe(lifecycleOwner) { state ->
-                    isStreaming = (state == PreviewView.StreamState.STREAMING)
+                    val ready = state == PreviewView.StreamState.STREAMING
+                    isStreaming = ready
+                    onCameraReady(ready)
                 }
 
                 val cameraProviderFuture = ProcessCameraProvider.getInstance(ctx)
 
                 cameraProviderFuture.addListener({
-                    val cameraProvider = cameraProviderFuture.get()
+                    val provider = cameraProviderFuture.get()
+                    cameraProvider = provider
 
                     val preview = Preview.Builder().build().also {
                         it.setSurfaceProvider(previewView.surfaceProvider)
@@ -59,8 +64,8 @@ fun CameraPreview(
                     val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
                     try {
-                        cameraProvider.unbindAll()
-                        cameraProvider.bindToLifecycle(
+                        provider.unbindAll()
+                        provider.bindToLifecycle(
                             lifecycleOwner,
                             cameraSelector,
                             preview,
@@ -73,7 +78,10 @@ fun CameraPreview(
 
                 previewView
             },
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            onRelease = {
+                cameraProvider?.unbindAll()
+            }
         )
 
         CameraScannerOverlay(

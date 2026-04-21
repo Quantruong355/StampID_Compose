@@ -2,6 +2,7 @@ package com.barefeet.stampid_compose.utils
 
 import android.os.Build
 import android.security.keystore.KeyProperties
+import android.util.Log
 import okhttp3.Interceptor
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
