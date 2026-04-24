@@ -11,17 +11,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import com.barefeet.stampid_compose.data.Article
-import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import java.io.InputStreamReader
 
 fun loadArticlesFromAssets(context: Context): List<Article>? {
-    val inputStream = context.assets.open("Articles.json")
-    val reader = InputStreamReader(inputStream)
-
-    val listType = object : TypeToken<List<Article>>() {}.type
-
-    return Gson().fromJson(reader, listType)
+    return try {
+        context.assets.open("Articles.json").use { inputStream ->
+            val reader = InputStreamReader(inputStream)
+            val listType = object : TypeToken<List<Article>>() {}.type
+            Gson().fromJson(reader, listType)
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    }
 }
 
 fun Modifier.noRippleClickable(
