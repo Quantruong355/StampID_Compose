@@ -47,6 +47,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.barefeet.stampid_compose.R
+import com.barefeet.stampid_compose.ui.theme.AppTypography
 
 fun ContentDrawScope.drawWithLayer(block: ContentDrawScope.() -> Unit) {
     with(drawContext.canvas.nativeCanvas) {
@@ -152,9 +153,8 @@ fun TabbarCustom(
                         Text(
                             text = text,
                             color = Color.Gray,
-                            style = TextStyle(
-                                fontSize = 13.sp,
-                                fontFamily = FontFamily(Font(R.font.onest_regular))
+                            style = AppTypography.OnestRegular.copy(
+                                fontSize = 13.sp
                             )
                         )
                     }

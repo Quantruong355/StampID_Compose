@@ -1,45 +1,36 @@
 package com.barefeet.stampid_compose.screens.iap
 
-import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -48,9 +39,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.barefeet.stampid_compose.R
 import com.barefeet.stampid_compose.UI_Common.CommonButton
+import com.barefeet.stampid_compose.ui.theme.AppTypography
 import com.barefeet.stampid_compose.utils.clickableSafe
-import com.barefeet.stampid_compose.utils.noRippleClickable
-import org.w3c.dom.Text
 
 @Composable
 fun IAPScreen(
@@ -168,9 +158,7 @@ fun IAPContentBody(
                         .padding(top = 15.dp),
                     color = colorResource(R.color.gray_2),
                     textAlign = TextAlign.Justify,
-                    style = TextStyle(
-                        fontSize = 12.sp,
-                        fontFamily = FontFamily(Font(R.font.onest_regular)),
+                    style = MaterialTheme.typography.bodySmall.copy(
                         platformStyle = PlatformTextStyle(
                             includeFontPadding = false
                         )
@@ -200,9 +188,8 @@ fun HeadDiamondSection() {
         Text(
             text = stringResource(R.string.iap_text4),
             color = colorResource(id = R.color.black),
-            style = TextStyle(
+            style = AppTypography.OnestSemiBold.copy(
                 fontSize = 20.sp,
-                fontFamily = FontFamily(Font(R.font.onest_semibold)),
                 platformStyle = PlatformTextStyle(
                     includeFontPadding = false
                 )
@@ -236,9 +223,8 @@ fun IAPFeatures(
         Text(
             text = text,
             color = colorResource(id = R.color.black),
-            style = TextStyle(
+            style = AppTypography.OnestMedium.copy(
                 fontSize = 13.sp,
-                fontFamily = FontFamily(Font(R.font.onest_medium)),
                 platformStyle = PlatformTextStyle(
                     includeFontPadding = false
                 )
@@ -289,9 +275,8 @@ fun IAPPriceBoard(
             Text(
                 text = item.title,
                 color = colorResource(id = R.color.black),
-                style = TextStyle(
+                style = AppTypography.OnestSemiBold.copy(
                     fontSize = 14.sp,
-                    fontFamily = FontFamily(Font(R.font.onest_semibold)),
                     platformStyle = PlatformTextStyle(
                         includeFontPadding = false
                     )
@@ -308,7 +293,8 @@ fun IAPPriceBoard(
                     withStyle(
                         style = SpanStyle(
                             fontSize = 16.sp,
-                            fontFamily = FontFamily(Font(R.font.onest_bold)),
+                            fontFamily = AppTypography.OnestBold.fontFamily,
+                            fontWeight = FontWeight.Bold,
                             color = Color.Black
                         )
                     ) {
@@ -318,7 +304,7 @@ fun IAPPriceBoard(
                     withStyle(
                         style = SpanStyle(
                             fontSize = 14.sp,
-                            fontFamily = FontFamily(Font(R.font.onest_regular)),
+                            fontFamily = AppTypography.OnestRegular.fontFamily,
                             color = Color.Black
                         )
                     ) {
@@ -332,10 +318,7 @@ fun IAPPriceBoard(
                     text = "Just ${item.pricePerWeek}/week",
                     color = colorResource(R.color.gray_2),
                     textAlign = TextAlign.Center,
-                    style = TextStyle(
-                        fontSize = 12.sp,
-                        fontFamily = FontFamily(Font(R.font.onest_regular))
-                    ),
+                    style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.padding(top = 3.dp)
                 )
             }

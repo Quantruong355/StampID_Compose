@@ -312,7 +312,10 @@ private fun BestMatchItemPreview() {
             faceValue = "",
             series = "",
             minPrice = 1000.0,
-            maxPrice = 2000.0
+            maxPrice = 2000.0,
+            condition = "",
+            currency = "",
+            description = ""
         ),
         marketItems = emptyList()
     )

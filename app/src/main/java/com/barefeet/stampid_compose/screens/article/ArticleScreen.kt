@@ -44,6 +44,7 @@ import com.barefeet.stampid_compose.screens.home.ArticleItem
 import com.barefeet.stampid_compose.screens.iap.HeadDiamondSection
 import com.barefeet.stampid_compose.screens.iap.IAPFeatures
 import com.barefeet.stampid_compose.screens.iap.IAPPriceBoard
+import com.barefeet.stampid_compose.ui.theme.AppTypography
 import com.barefeet.stampid_compose.utils.clickableSafe
 import com.barefeet.stampid_compose.utils.noRippleClickable
 
@@ -142,9 +143,8 @@ fun ArticleContentBody(
                 Text(
                     text = article.headline,
                     color = colorResource(id = R.color.black),
-                    style = TextStyle(
+                    style = AppTypography.OnestSemiBold.copy(
                         fontSize = 22.sp,
-                        fontFamily = FontFamily(Font(R.font.onest_semibold)),
                         platformStyle = PlatformTextStyle(
                             includeFontPadding = false
                         )
@@ -155,9 +155,8 @@ fun ArticleContentBody(
                 Text(
                     text = article.sub_headline,
                     color = colorResource(id = R.color.black),
-                    style = TextStyle(
+                    style = AppTypography.OnestRegular.copy(
                         fontSize = 15.sp,
-                        fontFamily = FontFamily(Font(R.font.onest_regular)),
                         platformStyle = PlatformTextStyle(
                             includeFontPadding = false
                         )
@@ -240,9 +239,12 @@ fun ArticleDetailItem(
 @Composable
 private fun ArticleContent() {
     ArticleContent(
-        article = Article("Headline", emptyList(),
+        article = Article(
+            "Headline", emptyList(),
             "Sub Headline",
-            "https://www.thesprucecrafts.com/thmb/1dXMO6crkv8a5Ez8Peb0aO7Mxzk=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/close-up-of-stamps-collection-and-magnifying-glass-116359212-5a8e23cefa6bcc003708ff62.jpg"),
+            "https://www.thesprucecrafts.com/thmb/1dXMO6crkv8a5Ez8Peb0aO7Mxzk=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/close-up-of-stamps-collection-and-magnifying-glass-116359212-5a8e23cefa6bcc003708ff62.jpg"
+        ),
         onBackClick = {},
-        modifier = Modifier)
+        modifier = Modifier
+    )
 }

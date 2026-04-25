@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.barefeet.stampid_compose.R
 import com.barefeet.stampid_compose.UI_Common.NewCollectionDialog
+import com.barefeet.stampid_compose.ui.theme.AppTypography
 import kotlinx.coroutines.launch
 
 @Composable
@@ -84,9 +85,8 @@ fun CollectionContent(
             Text(
                 text = stringResource(R.string.collection_text1),
                 color = Color.Black,
-                style = TextStyle(
-                    fontSize = 18.sp,
-                    fontFamily = FontFamily(Font(R.font.onest_semibold))
+                style = AppTypography.OnestSemiBold.copy(
+                    fontSize = 18.sp
                 ),
                 modifier = Modifier
                     .align(Alignment.Center)
@@ -129,18 +129,16 @@ fun StatisticBoard() {
                 Text(
                     text = "05",
                     color = Color.White,
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontFamily = FontFamily(Font(R.font.onest_semibold))
+                    style = AppTypography.OnestSemiBold.copy(
+                        fontSize = 18.sp
                     )
                 )
 
                 Text(
                     text = stringResource(R.string.collection_text2),
                     color = Color.White,
-                    style = TextStyle(
-                        fontSize = 15.sp,
-                        fontFamily = FontFamily(Font(R.font.onest_regular))
+                    style = AppTypography.OnestRegular.copy(
+                        fontSize = 15.sp
                     )
                 )
             }
@@ -158,18 +156,16 @@ fun StatisticBoard() {
                 Text(
                     text = "05",
                     color = Color.White,
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontFamily = FontFamily(Font(R.font.onest_semibold))
+                    style = AppTypography.OnestSemiBold.copy(
+                        fontSize = 18.sp
                     )
                 )
 
                 Text(
                     text = stringResource(R.string.collection_text3),
                     color = Color.White,
-                    style = TextStyle(
-                        fontSize = 15.sp,
-                        fontFamily = FontFamily(Font(R.font.onest_regular))
+                    style = AppTypography.OnestRegular.copy(
+                        fontSize = 15.sp
                     )
                 )
             }

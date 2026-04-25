@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.barefeet.stampid_compose.R
 import com.barefeet.stampid_compose.UI_Common.EmptyStampView
+import com.barefeet.stampid_compose.ui.theme.AppTypography
 
 @Composable
 fun AllCollectionScreen(
@@ -65,9 +66,8 @@ fun AllCollectionContent(
             Text(
                 text = stringResource(R.string.collection_text4,0),
                 color = Color.Black,
-                style = TextStyle(
-                    fontSize = 14.sp,
-                    fontFamily = FontFamily(Font(R.font.onest_semibold))
+                style = AppTypography.OnestSemiBold.copy(
+                    fontSize = 14.sp
                 ),
                 modifier = Modifier.weight(1f)
             )
@@ -117,9 +117,8 @@ private fun AddCollectionButton(
         Text(
             text = stringResource(R.string.collection_text6),
             color = colorResource(R.color.black),
-            style = TextStyle(
-                fontSize = 12.sp,
-                fontFamily = FontFamily(Font(R.font.onest_semibold))
+            style = AppTypography.OnestSemiBold.copy(
+                fontSize = 12.sp
             )
         )
     }

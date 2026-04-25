@@ -16,6 +16,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,14 +29,13 @@ import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.barefeet.stampid_compose.R
+import com.barefeet.stampid_compose.ui.theme.AppTypography
 import com.barefeet.stampid_compose.utils.clickableSafe
 import com.barefeet.stampid_compose.utils.noRippleClickable
 
@@ -67,9 +67,7 @@ fun SnapTipView(
                             modifier = Modifier
                                 .align(Alignment.Center),
                             color = colorResource(R.color.black),
-                            style = TextStyle(
-                                fontSize = 18.sp,
-                                fontFamily = FontFamily(Font(R.font.onest_semibold)),
+                            style = MaterialTheme.typography.titleMedium.copy(
                                 platformStyle = PlatformTextStyle(
                                     includeFontPadding = false
                                 )
@@ -120,9 +118,8 @@ fun SnapTipView(
                         modifier = Modifier.padding(top = 15.dp),
                         textAlign = TextAlign.Center,
                         color = colorResource(R.color.gray_2),
-                        style = TextStyle(
+                        style = AppTypography.OnestRegular.copy(
                             fontSize = 13.sp,
-                            fontFamily = FontFamily(Font(R.font.onest_regular)),
                             platformStyle = PlatformTextStyle(
                                 includeFontPadding = false
                             )
@@ -156,7 +153,7 @@ fun SnaptipItem(
                 withStyle(
                     style = SpanStyle(
                         fontSize = 13.sp,
-                        fontFamily = FontFamily(Font(R.font.onest_regular)),
+                        fontFamily = AppTypography.OnestRegular.fontFamily,
                         color = Color.Black
                     )
                 ) {
@@ -166,7 +163,7 @@ fun SnaptipItem(
                 withStyle(
                     style = SpanStyle(
                         fontSize = 13.sp,
-                        fontFamily = FontFamily(Font(R.font.onest_bold)),
+                        fontFamily = AppTypography.OnestBold.fontFamily,
                         color = Color.Black
                     )
                 ) {

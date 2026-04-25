@@ -1,6 +1,7 @@
 package com.barefeet.stampid_compose.screens.main
 
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -12,11 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -45,10 +42,7 @@ fun BottomNavBar(
                 label = {
                     Text(
                         stringResource(R.string.bottombar_text1),
-                        style = TextStyle(
-                            fontSize = 12.sp,
-                            fontFamily = FontFamily(Font(R.font.onest_regular))
-                        )
+                        style = MaterialTheme.typography.bodySmall
                     )
                 },
                 selected = currentRoute.hierarchy.any {
@@ -84,10 +78,7 @@ fun BottomNavBar(
                 label = {
                     Text(
                         stringResource(R.string.bottombar_text2),
-                        style = TextStyle(
-                            fontSize = 12.sp,
-                            fontFamily = FontFamily(Font(R.font.onest_regular))
-                        )
+                        style = MaterialTheme.typography.bodySmall
                     )
                 },
                 selected = currentRoute.hierarchy.any {

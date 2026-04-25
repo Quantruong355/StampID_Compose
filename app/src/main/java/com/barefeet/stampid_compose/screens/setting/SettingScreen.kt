@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,14 +22,13 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.barefeet.stampid_compose.R
 import com.barefeet.stampid_compose.UI_Common.IAPBanner
+import com.barefeet.stampid_compose.ui.theme.AppTypography
 import com.barefeet.stampid_compose.utils.clickableSafe
 import com.barefeet.stampid_compose.utils.noRippleClickable
 
@@ -131,10 +131,7 @@ fun SettingHeader(
         Text(
             text = stringResource(R.string.setting_text1),
             color = Color.Black,
-            style = TextStyle(
-                fontSize = 18.sp,
-                fontFamily = FontFamily(Font(R.font.onest_semibold))
-            ),
+            style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.align(Alignment.Center)
         )
     }
@@ -149,10 +146,7 @@ fun MembershipSection(
     Text(
         text = stringResource(R.string.setting_text2),
         color = colorResource(R.color.gray_2),
-        style = TextStyle(
-            fontSize = 13.sp,
-            fontFamily = FontFamily(Font(R.font.onest_semibold))
-        ),
+        style = AppTypography.OnestSemiBold.copy(fontSize = 13.sp),
         modifier = modifier.padding(top= 25.dp)
     )
 
@@ -174,19 +168,13 @@ fun MembershipSection(
             Text(
                 text = stringResource(R.string.setting_text3),
                 color = Color.Black,
-                style = TextStyle(
-                    fontSize = 15.sp,
-                    fontFamily = FontFamily(Font(R.font.onest_regular))
-                ),
+                style = AppTypography.OnestRegular.copy(fontSize = 15.sp),
             )
 
             Text(
                 text = stringResource(R.string.setting_text4, "Premium"),
                 color = colorResource(R.color.gray_2),
-                style = TextStyle(
-                    fontSize = 13.sp,
-                    fontFamily = FontFamily(Font(R.font.onest_regular))
-                ),
+                style = AppTypography.OnestRegular.copy(fontSize = 13.sp),
             )
         }
     }
@@ -211,10 +199,7 @@ fun Legalsection(
     Text(
         text = stringResource(R.string.setting_text5),
         color = colorResource(R.color.gray_2),
-        style = TextStyle(
-            fontSize = 13.sp,
-            fontFamily = FontFamily(Font(R.font.onest_semibold))
-        ),
+        style = AppTypography.OnestSemiBold.copy(fontSize = 13.sp),
         modifier = modifier.padding(top= 15.dp)
     )
 
@@ -232,10 +217,7 @@ fun Legalsection(
         Text(
             text = stringResource(R.string.setting_text6),
             color = Color.Black,
-            style = TextStyle(
-                fontSize = 15.sp,
-                fontFamily = FontFamily(Font(R.font.onest_regular))
-            ),
+            style = AppTypography.OnestRegular.copy(fontSize = 15.sp),
             modifier = modifier
         )
     }
@@ -255,10 +237,7 @@ fun Legalsection(
         Text(
             text = stringResource(R.string.setting_text7),
             color = Color.Black,
-            style = TextStyle(
-                fontSize = 15.sp,
-                fontFamily = FontFamily(Font(R.font.onest_regular))
-            ),
+            style = AppTypography.OnestRegular.copy(fontSize = 15.sp),
             modifier = modifier
         )
     }

@@ -89,4 +89,12 @@
 
     <!-- Bestmatch Texts -->
     <string name="bestmatch_text1">Best Matches</string>
+
+    <!-- Result Texts -->
+    <string name="result_text1">Yours</string>
+    <string name="result_text2">Reference</string>
+    <string name="result_text3">Reference price</string>
+    <string name="result_text4">Market offers </string>
+    <string name="result_text5">Upgrade to Pro to view prices.</string>
+    <string name="result_text6">See all</string>
 </resources>

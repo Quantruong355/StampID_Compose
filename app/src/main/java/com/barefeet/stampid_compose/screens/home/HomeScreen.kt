@@ -40,6 +40,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import com.barefeet.stampid_compose.ui.theme.AppTypography
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
@@ -154,9 +156,8 @@ fun HomeHeader(
             Text(
                 text = stringResource(R.string.home_text1),
                 color = colorResource(id = R.color.white),
-                style = TextStyle(
-                    fontSize = 18.sp,
-                    fontFamily = FontFamily(Font(R.font.onest_medium))
+                style = AppTypography.OnestMedium.copy(
+                    fontSize = 18.sp
                 )
             )
             Spacer(modifier = Modifier.weight(1f))
@@ -193,9 +194,8 @@ fun HomeHeader(
                 modifier = Modifier.padding(start = 5.dp),
                 text = stringResource(R.string.home_text2),
                 color = colorResource(id = R.color.white),
-                style = TextStyle(
-                    fontSize = 15.sp,
-                    fontFamily = FontFamily(Font(R.font.onest_medium))
+                style = AppTypography.OnestMedium.copy(
+                    fontSize = 15.sp
                 )
             )
         }

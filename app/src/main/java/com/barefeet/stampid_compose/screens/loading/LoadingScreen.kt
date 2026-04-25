@@ -34,8 +34,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
+import com.barefeet.stampid_compose.ui.theme.AppTypography
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -178,9 +178,8 @@ fun LoadingTextsView(modifier: Modifier = Modifier) {
             text = stringResource(R.string.loading_text1),
             modifier = Modifier.padding(start = 10.dp),
             color = colorResource(R.color.black),
-            style = TextStyle(
+            style = AppTypography.OnestSemiBold.copy(
                 fontSize = 16.sp,
-                fontFamily = FontFamily(Font(R.font.onest_semibold)),
                 platformStyle = PlatformTextStyle(
                     includeFontPadding = false
                 )
@@ -192,9 +191,8 @@ fun LoadingTextsView(modifier: Modifier = Modifier) {
         text = stringResource(R.string.loading_text2),
         modifier = Modifier.padding(top = 10.dp),
         color = colorResource(R.color.gray_2),
-        style = TextStyle(
+        style = AppTypography.OnestRegular.copy(
             fontSize = 13.sp,
-            fontFamily = FontFamily(Font(R.font.onest_regular)),
             platformStyle = PlatformTextStyle(
                 includeFontPadding = false
             )

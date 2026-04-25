@@ -21,7 +21,11 @@ data class StampAttributes(
     @SerializedName("face_value") val faceValue: String,
     @SerializedName("series") val series: String,
     @SerializedName("min_price") val minPrice: Double,
-    @SerializedName("max_price") val maxPrice: Double
+    @SerializedName("max_price") val maxPrice: Double,
+    @SerializedName("condition") val condition: String,
+    @SerializedName("currency") val currency: String,
+    @SerializedName("description") val description: String,
+
 )
 
 @Serializable
